@@ -1,0 +1,19 @@
+nav.navbar {
+    background-color: #389741 !important;
+}
+
+.navbar-brand {
+    color: #fff !important;
+}
+
+.nav-link {
+    color: #fff !important;
+    transition: 0.3s;
+    border-radius: 50px;
+}
+
+.nav-link:hover {
+    background-color: #2f7c36;
+    transition: 0.3s;
+    scale: 1.1;
+}

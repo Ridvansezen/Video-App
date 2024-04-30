@@ -1,0 +1,7 @@
+myenv/
+
+videoapp/base/__pycache__/
+
+videoapp/base/migrations/
+
+videoapp/videoapp/__pycache__/
