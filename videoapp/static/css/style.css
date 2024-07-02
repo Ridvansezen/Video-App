@@ -17,3 +17,17 @@ nav.navbar {
     transition: 0.3s;
     scale: 1.1;
 }
+
+.jumbotron {
+    background-color: rgb(206, 206, 206);
+    border-radius: 60px;
+    padding: 15px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    text-align: center; 
+    margin-top: 250px;
+}
+
+.index-text, .index-sub-text {
+    text-align: center; 
+}
