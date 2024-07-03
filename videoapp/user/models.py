@@ -3,6 +3,8 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class UserModel(AbstractUser):
@@ -24,3 +26,13 @@ class UserModel(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+    
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=500, blank=True)
+    profile_photo = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    registration_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username

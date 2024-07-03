@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+        <h1>{{ profile_user.username }}</h1>
+        <p>Kayıt Tarihi: {{ profile.registration_date }}</p>
+
+        <h2>Biyografi</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Güncelle</button>
+        </form>
+
+        <h2>Profil Fotoğrafı</h2>
+        {% if profile.profile_photo %}
+            <img src="{{ profile.profile_photo.url }}" alt="Profil Fotoğrafı">
+        {% else %}
+            <p>Profil fotoğrafı bulunamadı.</p>
+        {% endif %}
+{% endblock body %}
+    

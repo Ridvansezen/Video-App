@@ -2,17 +2,16 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
-    <h2>Giriş Yap</h2>
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">Giriş Yap</button> <!-- Giriş yap butonunu manuel olarak ekledik -->
-    </form>
+    <h2 class="header-text-user">Giriş Yap</h2>
+    <div class="login-form-container">
+        <form method="post">
+            {% csrf_token %}
+            <div class="login-form">
+                {{ form|crispy }}
+            </div>
+            <div class="button-container">
+                <button type="submit" class="login-button">Giriş Yap</button>
+            </div>
+        </form>
+    </div>
 {% endblock body %}

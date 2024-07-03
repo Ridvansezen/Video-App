@@ -31,3 +31,83 @@ nav.navbar {
 .index-text, .index-sub-text {
     text-align: center; 
 }
+
+.header-text-user {
+    margin-top: 150px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.header-text-user-register {
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.requiredField {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-radius: 50px !important;
+}
+
+.login-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px !important;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 50px !important;
+}
+
+.login-form input:focus {
+    outline: none;  /* Varsayılan outline'ı kaldırın */
+    border: 2px solid #389741;  /* Tıklandığında veya odaklandığında yeni border rengi */
+    box-shadow: 0 0 5px #2f7c36 /* Opsiyonel olarak gölge ekleyebilirsiniz */
+}
+
+.form-control {
+    text-align: center;
+    width: 450px !important;
+    margin-bottom: 10px;
+    border-radius: 50px !important;
+}
+
+.login-button {
+    background-color: #389741 !important;
+    border: none;
+    outline: none;
+    color: white;
+    width: 150px;
+    height: 40px;
+    margin-top: 40px;
+    border-radius: 30px;
+    transition: 0.3s;
+    margin-bottom: 150px;
+}
+
+.login-button:hover {
+    background-color: #fff !important;
+    outline-color: #389741;
+    outline-style: solid;
+    outline-width: 1px;
+    color: #389741;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.messages {
+    margin-top: 80px;
+    margin-bottom: 50px;
+}
