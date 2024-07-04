@@ -30,7 +30,7 @@
                           {% endif %}
                     </a>
                 {% else %}
-                    <a class="nav-link" href="{% url 'user:request_profile_user' %}"> {{request.user.username}} </a>
+                    <a class="nav-link" href="{% url 'user:view_profile' user_id=request.user.id %}"> {{ request.user.username }} </a>
                 {% endif %}
     
               </li>

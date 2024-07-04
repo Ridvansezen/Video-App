@@ -4,8 +4,12 @@ from django.contrib import messages
 from .forms import UserRegistrationForm
 from .forms import UserLoginForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, UserModel
 from .forms import ProfileForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
+
 
 def register_user(request):
     if request.method == 'POST':
@@ -54,20 +58,24 @@ def logout_user(request):
     return redirect('index')
 
 
+@login_required
 def request_user_profile(request):
-    return render(request, "user/profile.html")
+    return redirect('user:view_profile', user_id=request.user.id)
 
 
 def view_profile(request, user_id):
-    profile_user = get_object_or_404(User, pk=user_id)
-    profile = get_object_or_404(Profile, user=profile_user)
+    profile_user = get_object_or_404(UserModel, pk=user_id)
+    
+    # Kullanıcıya ait profilin var olup olmadığını kontrol et, yoksa oluştur
+    profile, created = Profile.objects.get_or_create(user=profile_user)
 
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('view_profile', user_id=user_id)
+        if request.user == profile_user:  # Sadece kendi profili üzerinde değişiklik yapabilsin
+            form = ProfileForm(request.POST, request.FILES, instance=profile)
+            if form.is_valid():
+                form.save()
+                return redirect('user:view_profile', user_id=user_id)
     else:
         form = ProfileForm(instance=profile)
 
-    return render(request, 'user/profile.html', {'profile_user': profile_user, 'profile': profile, 'form': form})        
+    return render(request, 'user/profile.html', {'profile_user': profile_user, 'profile': profile, 'form': form})

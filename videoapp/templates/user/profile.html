@@ -1,22 +1,27 @@
 {% extends 'layout.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block body %}
-        <h1>{{ profile_user.username }}</h1>
-        <p>Kayıt Tarihi: {{ profile.registration_date }}</p>
+    <h1>{{ profile_user.username }}</h1>
+    <p>Ad-Soyad: {{ profile_user.first_name }} {{ profile_user.last_name }}</p>
+    
+    <h2>Profil Fotoğrafı</h2>
+    {% if profile.profile_photo %}
+        <img src="{{ profile.profile_photo.url }}" alt="Profil Fotoğrafı">
+    {% else %}
+        <img src="/media/default.jpg" alt="Varsayılan Profil Fotoğrafı">
+    {% endif %}
 
-        <h2>Biyografi</h2>
+    <h2>Biyografi</h2>
+    {% if request.user == profile_user %}
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Güncelle</button>
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Güncelle</button>
         </form>
+    {% else %}
+        <p>{{ profile.bio }}</p>
+    {% endif %}
 
-        <h2>Profil Fotoğrafı</h2>
-        {% if profile.profile_photo %}
-            <img src="{{ profile.profile_photo.url }}" alt="Profil Fotoğrafı">
-        {% else %}
-            <p>Profil fotoğrafı bulunamadı.</p>
-        {% endif %}
-{% endblock body %}
-    
+    <p>Kayıt Tarihi: {{ profile.registration_date|date:"d F Y, H:i" }}</p>
+{% endblock %}
