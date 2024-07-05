@@ -2,26 +2,25 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
-    <h1>{{ profile_user.username }}</h1>
-    <p>Ad-Soyad: {{ profile_user.first_name }} {{ profile_user.last_name }}</p>
-    
-    <h2>Profil Fotoğrafı</h2>
-    {% if profile.profile_photo %}
-        <img src="{{ profile.profile_photo.url }}" alt="Profil Fotoğrafı">
+    <div class="profile-picture-container">
+        {% if profile.profile_photo %}
+            <img class="profile-picture" src="{{ profile.profile_photo.url }}" alt="Profil Fotoğrafı" title="Profil Fotoğrafı">
+        {% else %}
+            <img class="profile-picture" src="/media/default.jpg" alt="Varsayılan Profil Fotoğrafı" title="Profil Fotoğrafı">
+        {% endif %}
+    </div>
+
+    {% if profile_user.username == "ridvan" %}
+        <h3 class="username-text">{{ profile_user.username }} <span style="color: red;">(admin)</span></h3>
     {% else %}
-        <img src="/media/default.jpg" alt="Varsayılan Profil Fotoğrafı">
+        <h3 class="username-text">{{ profile_user.username }}</h3>
     {% endif %}
 
-    <h2>Biyografi</h2>
-    {% if request.user == profile_user %}
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-primary">Güncelle</button>
-        </form>
-    {% else %}
-        <p>{{ profile.bio }}</p>
-    {% endif %}
+    <p class="name-surname-text">{{ profile_user.first_name }} {{ profile_user.last_name }}</p>
 
-    <p>Kayıt Tarihi: {{ profile.registration_date|date:"d F Y, H:i" }}</p>
+    <div class="bio-container">
+        <p class="bio-text">{{ profile.bio }} <span id="dots">...</span><span id="more"></span></p>
+    </div>
+
+    <p class="registration-date-text">Kayıt olma tarihi: {{ profile.registration_date|date:"d F Y, H:i" }}</p>
 {% endblock %}

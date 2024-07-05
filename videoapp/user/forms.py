@@ -6,6 +6,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from user.models import Profile
+from crispy_forms.layout import Layout, Submit, Field
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 
 UserModel = get_user_model()
 
@@ -39,6 +41,23 @@ class UserLoginForm(AuthenticationForm):
         
         
 class ProfileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.form_show_labels = False
+        self.helper.layout = Layout(
+            Field('bio', css_class='form-control')  # Etiketi burada CSS ile özelleştirebilirsiniz
+        )
+
     class Meta:
         model = Profile
         fields = ['bio', 'profile_photo']
+
+
+class UserEditForm(UserChangeForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = UserModel
+        fields = ['username', 'first_name', 'last_name', 'email', 'password']

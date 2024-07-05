@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+    <h1 class="header-text-user">Profil Düzenle</h1>
+    <form class="edit-profile-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form|crispy }}
+        {{ profile_form|crispy }}
+        <div class="edit-profile-button-container">
+            <button type="submit" class="edit-profile-button">Güncelle</button>
+        </div>
+    </form>
+{% endblock %}

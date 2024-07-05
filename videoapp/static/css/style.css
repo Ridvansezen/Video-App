@@ -111,3 +111,130 @@ nav.navbar {
     margin-top: 80px;
     margin-bottom: 10px;
 }
+
+.profile-picture {
+    margin-top: 80px;
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    object-fit: cover;
+}
+
+.profile-picture-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.username-text {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.name-surname-text {
+    margin-top: 15px;
+    text-align: center;
+}
+
+
+.bio-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    justify-content: center; 
+    margin-right: 55px;
+}
+
+.bio-form .form-control {
+    width: 100%;
+    height: 90px;
+    resize: vertical; 
+
+}
+
+.bio-form .form-control-file {
+    width: 100%;
+
+}
+
+.navbar-profile-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.navbar-profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu-end {
+    right: 0;
+    left: auto;
+}
+
+.nav-item.dropdown .nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.registration-date-text {
+    text-align: center;
+    margin-top: 150px;
+}
+
+.bio-text {
+    text-align: center;
+    margin-top: 30px;
+    white-space: pre-line;
+}
+
+.bio-container {
+    display: flex;
+    justify-content: center; /* Yatay hizalama */
+    align-items: center; /* Dikey hizalama */
+}
+
+.edit-profile-button {
+    margin-top: 100px;
+    margin-bottom: 150px;
+    background-color: #389741 !important;
+    border: none;
+    outline: none;
+    color: white;
+    width: 150px;
+    height: 40px;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.edit-profile-button:hover {
+    background-color: #fff !important;
+    outline-color: #389741;
+    outline-style: solid;
+    outline-width: 1px;
+    color: #389741;
+}
+
+.edit-profile-button-container {
+    display: flex;
+    justify-content: center; /* Yatay hizalama */
+    align-items: center;
+}
+
+.edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-password-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

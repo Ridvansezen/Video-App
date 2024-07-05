@@ -5,10 +5,11 @@ from .forms import UserRegistrationForm
 from .forms import UserLoginForm
 from django.contrib.auth.models import User
 from .models import Profile, UserModel
-from .forms import ProfileForm
+from .forms import ProfileForm, UserEditForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 
 def register_user(request):
@@ -79,3 +80,36 @@ def view_profile(request, user_id):
         form = ProfileForm(instance=profile)
 
     return render(request, 'user/profile.html', {'profile_user': profile_user, 'profile': profile, 'form': form})
+
+
+def edit_profile(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Profil başarıyla güncellendi.')
+            return redirect('user:view_profile', user_id=request.user.id)
+        else:
+            messages.error(request, 'Formdaki bazı alanlar geçersiz.')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+
+    return render(request, 'user/edit_profile.html', {'user_form': user_form, 'profile_form': profile_form})
+
+def change_password(request, user_id):
+    user = get_object_or_404(UserModel, pk=user_id)
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Oturum açma hash'ini günceller
+            messages.success(request, 'Şifreniz başarıyla değiştirildi!')
+            return redirect('user:view_profile', user_id=user_id)
+    else:
+        form = PasswordChangeForm(user)
+
+    return render(request, 'user/change_password.html', {'form': form})
