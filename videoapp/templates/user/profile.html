@@ -1,6 +1,5 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
-
 {% block body %}
     <div class="profile-picture-container">
         {% if profile.profile_photo %}
@@ -19,8 +18,56 @@
     <p class="name-surname-text">{{ profile_user.first_name }} {{ profile_user.last_name }}</p>
 
     <div class="bio-container">
-        <p class="bio-text">{{ profile.bio }} <span id="dots">...</span><span id="more"></span></p>
+        <div class="bio-text">
+            <p class="truncated-bio">{{ profile.bio|linebreaksbr|truncatechars_html:150 }}</p> <!-- Kırpılmış bio metni, 150 karaktere kadar -->
+            <p class="full-bio" style="display: none;">{{ profile.bio|linebreaksbr }}</p> <!-- Tüm bio metni, başlangıçta gizli -->
+            {% if profile.bio|length > 150 %}
+                <button class="more-btn">Daha fazla göster</button>
+            {% endif %}
+        </div>
     </div>
 
     <p class="registration-date-text">Kayıt olma tarihi: {{ profile.registration_date|date:"d F Y, H:i" }}</p>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .bio-text p {
+        margin: 0;
+    }
+    .more-btn {
+        display: block;
+        margin-top: 10px;
+        cursor: pointer;
+        color: #007bff;
+        border: none;
+        background: none;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const moreBtn = document.querySelector('.more-btn');
+        const truncatedBio = document.querySelector('.truncated-bio');
+        const fullBio = document.querySelector('.full-bio');
+
+        if (moreBtn && truncatedBio && fullBio) {
+            moreBtn.addEventListener('click', function() {
+                console.log('Button clicked'); 
+                if (fullBio.style.display === 'none') {
+                    fullBio.style.display = 'block';
+                    truncatedBio.style.display = 'none';
+                    moreBtn.textContent = 'Daha az göster';
+                } else {
+                    fullBio.style.display = 'none';
+                    truncatedBio.style.display = 'block';
+                    moreBtn.textContent = 'Daha fazla göster';
+                }
+            });
+        }
+    });
+</script>
+
 {% endblock %}
