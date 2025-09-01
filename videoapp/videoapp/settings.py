@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -69,15 +70,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'videoapp.wsgi.application'
 
 
+AUTH_USER_MODEL = 'users.UserModel'
+
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django-video_app',       # pgAdmin'de oluşturduğun DB adı
-        'USER': 'postgres',          # PostgreSQL kullanıcı adı
-        'PASSWORD': '1234',  # PostgreSQL şifren
+        'NAME': 'django_video_app',       
+        'USER': 'postgres',          
+        'PASSWORD': '1234',  
         'HOST': 'localhost',
         'PORT': '5432',
     }
