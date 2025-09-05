@@ -18,7 +18,7 @@ def register_view(request):
             user = form.save()
             # Kayıt sonrası otomatik login
             login(request, user)
-            messages.success(request, f"Hoşgeldiniz, {user.username}!")
+            messages.success(request, f"Hoşgeldiniz, {user.username}!")  # Başarılı kayıt mesajı
             return redirect("/")  # index sayfasına yönlendir
     else:
         form = CustomUserCreationForm()
@@ -35,17 +35,17 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.success(request, f"Hoşgeldiniz, {user.username}!")
-                return redirect("/")  # index sayfasına yönlendir
+                messages.success(request, f"Başarıyla giriş yapıldı! Hoşgeldiniz, {user.username}")  # yeşil
+                return redirect("/")
             else:
-                messages.error(request, "Kullanıcı adı veya şifre hatalı.")
+                messages.error(request, "Kullanıcı adı veya şifre hatalı.")  # kırmızı
     return render(request, "user/login.html", {"form": form})
 
 
 # Logout view
 def logout_view(request):
     logout(request)
-    messages.info(request, "Başarıyla çıkış yaptınız.")
+    messages.success(request, "Başarıyla çıkış yaptınız.")
     return redirect("/")  # index sayfasına yönlendir
 
 

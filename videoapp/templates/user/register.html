@@ -1,16 +1,93 @@
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <title>Kayıt Ol</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .step { display: none; }
+        .step.active { display: block; }
+    </style>
 </head>
 <body>
+<div class="container mt-5" style="max-width: 500px;">
     <h2>Kayıt Ol</h2>
-    <form method="post" enctype="multipart/form-data">
+
+    <!-- Backend mesajlar (kayıt sonrası success) -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert 
+                {% if message.tags == 'success' %}alert-success
+                {% elif message.tags == 'error' %}alert-danger
+                {% elif message.tags == 'info' %}alert-info
+                {% else %}alert-secondary{% endif %} 
+                alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" id="registerForm">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Kayıt Ol</button>
+
+        <!-- JS info mesaj -->
+        <div id="stepMessage" class="alert alert-info" style="display:none;"></div>
+
+        <!-- Step 1 -->
+        <div class="step active" id="step1">
+            {{ form.username|as_crispy_field }}
+            {{ form.password1|as_crispy_field }}
+            {{ form.password2|as_crispy_field }}
+            <button type="button" class="btn btn-primary mt-2 w-100" onclick="nextStep()">İleri</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step" id="step2">
+            {{ form.name|as_crispy_field }}
+            {{ form.email|as_crispy_field }}
+            {{ form.bio|as_crispy_field }}
+            {{ form.profile_picture|as_crispy_field }}
+            {{ form.birth_date|as_crispy_field }}
+            <button type="button" class="btn btn-secondary mt-2 w-50" onclick="prevStep()">Geri</button>
+            <button type="submit" class="btn btn-success mt-2 w-50">Kayıt Ol</button>
+        </div>
     </form>
-    <p>Zaten hesabın var mı? <a href="{% url 'login' %}">Giriş Yap</a></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let currentStep = 1;
+
+function nextStep() {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep++;
+    document.getElementById('step' + currentStep).classList.add('active');
+
+    // info mesajını göster
+    const msgDiv = document.getElementById('stepMessage');
+    if(currentStep === 2) {
+        msgDiv.innerText = "Şimdi diğer bilgilerini girin!";
+        msgDiv.style.display = "block";
+    } else {
+        msgDiv.style.display = "none";
+    }
+}
+
+function prevStep() {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep--;
+    document.getElementById('step' + currentStep).classList.add('active');
+
+    const msgDiv = document.getElementById('stepMessage');
+    if(currentStep === 2) {
+        msgDiv.innerText = "Şimdi diğer bilgilerini gir!";
+        msgDiv.style.display = "block";
+    } else {
+        msgDiv.style.display = "none";
+    }
+}
+</script>
 </body>
 </html>
