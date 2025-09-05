@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm
 from django import forms
+from .forms import CustomLoginForm
 
 # Basit login formu
 class LoginForm(forms.Form):
@@ -26,21 +27,18 @@ def register_view(request):
 
 
 # Login view
+
 def login_view(request):
-    form = LoginForm(request.POST or None)
+    form = CustomLoginForm(request, data=request.POST or None)
     if request.method == "POST":
         if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.success(request, f"Başarıyla giriş yapıldı! Hoşgeldiniz, {user.username}")  # yeşil
-                return redirect("/")
-            else:
-                messages.error(request, "Kullanıcı adı veya şifre hatalı.")  # kırmızı
+            user = form.get_user()
+            login(request, user)
+            messages.success(request, f"Hoşgeldiniz, {user.username}!")
+            return redirect("/")
+        else:
+            messages.error(request, "Kullanıcı adı veya şifre hatalı.")
     return render(request, "user/login.html", {"form": form})
-
 
 # Logout view
 def logout_view(request):

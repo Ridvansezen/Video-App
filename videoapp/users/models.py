@@ -27,13 +27,13 @@ class UserManager(BaseUserManager):
     
     
 class UserModel(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=16, unique=True, validators=[MinLengthValidator(4)])
-    email = models.EmailField(blank=True, null=True)  # opsiyonel
-    name = models.CharField(max_length=36, blank=True, null=True, validators=[MinLengthValidator(4)])
-    bio = models.TextField(max_length=350, blank=True, null=True)
-    profile_picture = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
+    username = models.CharField(max_length=16, unique=True, validators=[MinLengthValidator(4)], verbose_name="Kullanıcı adı")
+    email = models.EmailField(blank=True, null=True, verbose_name="E-Posta")  # opsiyonel
+    name = models.CharField(max_length=36, blank=True, null=True, validators=[MinLengthValidator(4)], verbose_name="isim, Soyisim")
+    bio = models.TextField(max_length=350, blank=True, null=True, verbose_name="Biyografi")
+    profile_picture = models.ImageField(upload_to="profile_pics/", blank=True, null=True, verbose_name="Profil resmi")
     joined_at = models.DateTimeField(auto_now_add=True)
-    birth_date = models.DateField(blank=True, null=True)
+    birth_date = models.DateField(blank=True, null=True, verbose_name="Doğum tarihi")
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
