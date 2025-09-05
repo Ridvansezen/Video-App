@@ -1,0 +1,49 @@
+.header-text {
+    text-align: center;
+}
+
+.index-header-text {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.form-label {
+    display: block !important;
+    text-align: center !important;
+}
+
+.forms-block {
+    margin-top: 200px;
+    margin-bottom: 100px;
+}
+
+.login-button {
+    margin-top: 50px !important;
+    border-radius: 150px;
+    width: 200px !important;
+    margin: 50px auto 0 auto !important;
+    display: block;
+    background-color: #077818;
+    border-color: #077818;
+    transition: 0.2s;
+}
+
+.login-button:hover {
+    background-color: #fff;
+    border-color: #077818;
+    color: #077818;
+    scale: 1.05;
+}
+
+.login-button-back {
+    margin-top: 50px !important;
+    border-radius: 150px;
+    width: 200px !important;
+    margin: 50px auto 0 auto !important;
+    display: block;
+    color: fff;
+}
+
+.form-control {
+    border-radius: 50px;
+}

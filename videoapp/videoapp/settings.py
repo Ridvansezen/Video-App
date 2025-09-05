@@ -93,6 +93,13 @@ DATABASES = {
 }
 
 
+STATIC_URL = '/static/'
+
+# Eğer projenin rootunda static klasörü varsa
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
