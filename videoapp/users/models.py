@@ -33,7 +33,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     bio = models.TextField(max_length=350, blank=True, null=True, verbose_name="Biyografi")
     profile_picture = models.ImageField(upload_to="profile_pics/", blank=True, null=True, verbose_name="Profil resmi")
     joined_at = models.DateTimeField(auto_now_add=True)
-    birth_date = models.DateField(blank=True, null=True, verbose_name="Doğum tarihi")
+    birth_date = models.DateField(blank=True, null=True) 
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

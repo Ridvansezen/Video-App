@@ -1,28 +1,53 @@
 from django.contrib import admin
-from users.models import UserModel
 from django.contrib.auth.admin import UserAdmin
+from users.models import UserModel
 
 
 class CustomUserAdmin(UserAdmin):
     model = UserModel
 
-    list_display = ("username", "email", "name", "bio", "profile_picture", "birth_date", "joined_at")
+    list_display = (
+        "username",
+        "name",
+        "birth_date",
+        "joined_at",
+        "is_active",
+        "is_staff",
+        "is_superuser",
+    )
     search_fields = ("username", "email", "name")
     ordering = ("username",)
-    readonly_fields = ("joined_at",)
+    readonly_fields = ["joined_at"]
 
-    # Düzenleme formu
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        ("Kişisel Bilgiler", {"fields": ("name", "email", "bio", "profile_picture", "birth_date", "joined_at")}),
+        ("Kişisel Bilgiler", {
+            "fields": ("name", "email", "bio", "profile_picture", "birth_date", "joined_at", "last_login"),
+        }),
+        ("Yetkiler", {
+            "fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions"),
+        }),
+        ("Önemli Tarihler", {"fields": ()}),  # joined_at ve last_login yukarıda
     )
 
-    # Yeni kullanıcı ekleme formu
     add_fieldsets = (
         (None, {
             "classes": ("wide",),
-            "fields": ("username", "password1", "password2", "name", "email", "bio", "profile_picture", "birth_date"),
+            "fields": (
+                "username",
+                "password1",
+                "password2",
+                "name",
+                "email",
+                "bio",
+                "profile_picture",
+                "birth_date",
+                "is_active",
+                "is_staff",
+                "is_superuser",
+            ),
         }),
     )
+
 
 admin.site.register(UserModel, CustomUserAdmin)
