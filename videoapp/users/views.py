@@ -54,9 +54,12 @@ def login_view(request):
 
 # Logout view
 def logout_view(request):
-    logout(request)
-    messages.success(request, "Başarıyla çıkış yaptınız.")
-    return redirect("/")  # index sayfasına yönlendir
+    if request.user.is_authenticated:
+        logout(request)
+        messages.success(request, "Başarıyla çıkış yaptınız.")
+    else:
+        messages.error(request, "Zaten giriş yapmamışsınız.")
+    return redirect("login")
 
 
 def index(request):

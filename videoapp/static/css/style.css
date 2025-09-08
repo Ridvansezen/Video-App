@@ -45,7 +45,7 @@
 }
 
 .form-control {
-    border-radius: 50px;
+    border-radius: 20px;
     transition: 0.2s;
 }
 
@@ -55,4 +55,26 @@
 
 .redirect-login-register-text {
     margin-top: 50px !important;
+}
+
+.footer-text {
+    text-align: center;
+}
+
+.footer {
+    margin-top: 150px !important;
+}
+
+.navbar {
+    background-color: #077818 !important;
+}
+
+.navbar-link-texts {
+    color:#fff;
+    transition: 0.2s;
+}
+
+.navbar-link-texts:hover {
+    scale: 0.95;
+    color: rgb(168, 255, 142);
 }
