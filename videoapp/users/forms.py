@@ -34,3 +34,10 @@ class CustomLoginForm(AuthenticationForm):
         label=_("Şifre"),
         widget=forms.PasswordInput(attrs={"class": "form-control"})
     )
+    
+    
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserModel
+        fields = ["name", "bio", "profile_picture", "birth_date"]

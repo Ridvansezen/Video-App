@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import CustomUserCreationForm
+from users.forms import CustomUserCreationForm, CustomLoginForm, UserUpdateForm
 from django import forms
-from .forms import CustomLoginForm
 from django.utils.html import format_html
+from django.contrib.auth.decorators import login_required
+from users.models import UserModel
+from django.conf import settings
 
 # Basit login formu
 class LoginForm(forms.Form):
@@ -62,5 +64,29 @@ def logout_view(request):
     return redirect("login")
 
 
+
+
 def index(request):
     return render(request, "index.html")
+
+
+
+def profile_view(request, username):
+    user_obj = get_object_or_404(UserModel, username=username)
+    is_owner = request.user.is_authenticated and request.user.username == username
+
+    if request.method == "POST" and is_owner:
+        form = UserUpdateForm(request.POST, request.FILES, instance=user_obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profiliniz güncellendi.")
+            return redirect("profile", username=username)
+    else:
+        form = UserUpdateForm(instance=user_obj)
+
+    return render(request, "user/profile.html", {
+        "user_obj": user_obj,
+        "is_owner": is_owner,
+        "form": form,
+        "MEDIA_URL": settings.MEDIA_URL,
+    })

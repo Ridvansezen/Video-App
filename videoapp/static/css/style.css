@@ -78,3 +78,16 @@
     scale: 0.95;
     color: rgb(168, 255, 142);
 }
+
+.profile-picture-div img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 70px;
+}
+
+.profile-username {
+    text-align: center !important;
+    display: flex;
+    justify-content: center; /* yatay */
+    align-items: center; 
+}
