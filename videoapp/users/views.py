@@ -7,6 +7,7 @@ from django.utils.html import format_html
 from django.contrib.auth.decorators import login_required
 from users.models import UserModel
 from django.conf import settings
+from posts.models import Post
 
 # Basit login formu
 class LoginForm(forms.Form):
@@ -75,6 +76,9 @@ def profile_view(request, username):
     user_obj = get_object_or_404(UserModel, username=username)
     is_owner = request.user.is_authenticated and request.user.username == username
 
+    # Kullanıcıya ait postlar
+    posts = Post.objects.filter(user=user_obj).order_by("-created_at")[:20]
+
     if request.method == "POST" and is_owner:
         form = UserUpdateForm(request.POST, request.FILES, instance=user_obj)
         if form.is_valid():
@@ -89,4 +93,5 @@ def profile_view(request, username):
         "is_owner": is_owner,
         "form": form,
         "MEDIA_URL": settings.MEDIA_URL,
+        "posts": posts,  # burayı ekledik
     })

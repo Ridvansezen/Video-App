@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h3>Keşfet</h3>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for post in posts %}
+        <div class="col">
+          {% include "posts/post_card.html" with post=post %}
+        </div>
+      {% empty %}
+        <p>Henüz paylaşım yok.</p>
+      {% endfor %}
+    </div>
+  
+    <!-- pagination -->
+    <nav>
+      <ul class="pagination">
+        {% if posts.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}">Önceki</a></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">Sayfa {{ posts.number }} / {{ posts.paginator.num_pages }}</span></li>
+        {% if posts.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}">Sonraki</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+{% endblock %}

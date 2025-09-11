@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% get_media_prefix as MEDIA_URL %}
+
+{% block content %}
+<div class="container mt-4">
+  <h3>Yeni Gönderi</h3>
+  
+  <!-- Post tipini data attribute ile JS'e geçiriyoruz -->
+  <form method="post" enctype="multipart/form-data" id="postForm" data-post-type="{{ post_type }}">
+    {% csrf_token %}
+
+    <!-- Dosya alanı -->
+    <div id="mediaField">
+      {% if post_type == 'image' %}
+        {{ form.image|as_crispy_field }}
+      {% elif post_type == 'video' %}
+        {{ form.video|as_crispy_field }}
+      {% endif %}
+    </div>
+
+    <!-- Açıklama alanı -->
+    <div id="contentField" style="display:none; margin-top:15px;">
+      {{ form.content|as_crispy_field }}
+    </div>
+
+    <!-- Paylaş butonu -->
+    <button type="submit" class="btn btn-primary mt-3" id="submitBtn" style="display:none;">Paylaş</button>
+  </form>
+</div>
+
+<script>
+  const postForm = document.getElementById("postForm");
+  const postType = postForm.dataset.postType; // "text", "image", "video"
+
+  const contentField = document.getElementById("contentField");
+  const submitBtn = document.getElementById("submitBtn");
+
+  let mediaInput = null;
+  if (postType === "image") {
+    mediaInput = document.querySelector("#id_image");
+  } else if (postType === "video") {
+    mediaInput = document.querySelector("#id_video");
+  }
+
+  // Text post ise content ve submit direkt görünür
+  if (postType === "text") {
+    contentField.style.display = "block";
+    submitBtn.style.display = "block";
+  }
+
+  // Image veya video post için input değişimini dinle
+  if (mediaInput) {
+    mediaInput.addEventListener("change", () => {
+      if (mediaInput.files.length > 0) {
+        contentField.style.display = "block";
+        submitBtn.style.display = "block";
+      } else {
+        contentField.style.display = "none";
+        submitBtn.style.display = "none";
+      }
+    });
+  }
+</script>
+{% endblock %}

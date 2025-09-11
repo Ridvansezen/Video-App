@@ -38,6 +38,36 @@
 
     <hr>
 
+    <h4 class="mt-4">Gönderiler</h4>
+
+    {% if is_owner %}
+        <div class="dropdown mt-3">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Paylaş
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'posts:create_post' 'text' %}">Yazı Gönder</a></li>
+            <li><a class="dropdown-item" href="{% url 'posts:create_post' 'image' %}">Fotoğraf Gönder</a></li>
+            <li><a class="dropdown-item" href="{% url 'posts:create_post' 'video' %}">Video Gönder</a></li>
+          </ul>
+        </div>
+    {% endif %}
+
+
+    {% if posts %}
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3">
+        {% for post in posts %}
+          <div class="col">
+            {% include "posts/post_card.html" with post=post %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted">Henüz gönderi yok.</p>
+  {% endif %}
+    
+
+
     {% if is_owner %}
     <div class="collapse mt-4" id="editForm">
       <h4>Profili Düzenle</h4>
