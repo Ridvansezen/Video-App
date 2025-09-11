@@ -27,11 +27,16 @@
       </button>
     {% endif %}
 
+    <br><br>
+
+    <p class="text-muted">Katılma tarihi: {{ user_obj.joined_at|date:"d.m.Y"|default:"—" }}</p>
+
     <hr>
 
-    <p>{{ user_obj.bio|default:"Henüz biyografi eklenmedi." }}</p>
-    <p><strong>E-posta:</strong> {{ user_obj.email|default:"—" }}</p>
-    <p><strong>Katılma tarihi:</strong> {{ user_obj.joined_at|date:"d.m.Y"|default:"—" }}</p>
+    <p>{{ user_obj.bio|default:"Henüz biyografi eklenmedi."|linebreaksbr }}</p>
+    
+
+    <hr>
 
     {% if is_owner %}
     <div class="collapse mt-4" id="editForm">

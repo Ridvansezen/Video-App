@@ -31,7 +31,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(blank=True, null=True, verbose_name="E-Posta")  # opsiyonel
     name = models.CharField(max_length=36, blank=True, null=True, validators=[MinLengthValidator(4)], verbose_name="isim, Soyisim")
     bio = models.TextField(max_length=350, blank=True, null=True, verbose_name="Biyografi")
-    profile_picture = models.ImageField(upload_to="profile_pics/", blank=True, null=True, verbose_name="Profil resmi")
+    profile_picture = models.ImageField(upload_to="profile_pics/", blank=True, null=True, default="default.jpg" ,verbose_name="Profil resmi")
     joined_at = models.DateTimeField(auto_now_add=True)
     birth_date = models.DateField(blank=True, null=True) 
 
