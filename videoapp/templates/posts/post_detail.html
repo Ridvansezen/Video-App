@@ -12,22 +12,22 @@
         {% else %}
           <img src="{{ MEDIA_URL }}default.jpg" alt="Profil" class="rounded-circle me-2" width="40" height="40">
         {% endif %}
-            <strong>
-            <a class="text-dark text-decoration-none" href="{% url 'profile' post.user.username %}">
-              {{ post.user.username }}
-              {% if post.user.is_verified %}
-                  <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>
-              {% endif %}
-            </a>
-          </strong>
+        <strong>
+          <a class="text-dark text-decoration-none" href="{% url 'profile' post.user.username %}">
+            {{ post.user.username }}
+            {% if post.user.is_verified %}
+              <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>
+            {% endif %}
+          </a>
+        </strong>
       </div>
-  
+
       <div class="card-body">
-  
+
         {% if post.content %}
           <p class="card-text">{{ post.content|linebreaksbr }}</p>
         {% endif %}
-  
+
         {% if post.image %}
           <div class="media-container mb-2">
             <img src="{{ post.image.url }}" alt="Fotoğraf">
@@ -40,66 +40,88 @@
             </video>
           </div>
         {% endif %}
-  
-        {% if request.user.is_authenticated %}
-          <!-- Like / Save / Comment alanı -->
-          <div class="d-flex align-items-center mt-2">
 
-            <!-- Like -->
-            <form action="{% url 'posts:toggle_like' post.pk %}" method="post" class="me-2 d-flex align-items-center">
-              {% csrf_token %}
-              <button type="submit" class="icon-button">
-                {% if user_liked %}
-                  <i class="fa-solid fa-heart liked"></i>
-                {% else %}
+        <!-- Like / Save / Comment alanı -->
+        <div class="d-flex align-items-center mt-2">
+
+          <!-- Like -->
+          <div class="me-2 d-flex align-items-center">
+            {% if request.user.is_authenticated %}
+              <form action="{% url 'posts:toggle_like' post.pk %}" method="post" class="d-flex align-items-center">
+                {% csrf_token %}
+                <button type="submit" class="icon-button">
+                  {% if user_liked %}
+                    <i class="fa-solid fa-heart liked"></i>
+                  {% else %}
+                    <i class="fa-regular fa-heart not-liked"></i>
+                  {% endif %}
+                </button>
+                <span class="ms-2 like-count">{{ post.like_count }}</span>
+              </form>
+            {% else %}
+              <form action="{% url 'login' %}" method="get" class="d-flex align-items-center">
+                <button type="submit" class="icon-button" onclick="alert('Beğenmek için giriş yapmalısınız.')">
                   <i class="fa-regular fa-heart not-liked"></i>
-                {% endif %}
-              </button>
-              <span class="ms-2 like-count">{{ post.like_count }}</span>
-            </form>
-          
-            <!-- Save -->
-            <form action="{% url 'posts:toggle_save' post.pk %}" method="post" class="me-2 d-flex align-items-center">
-              {% csrf_token %}
-              <button type="submit" class="icon-button">
-                {% if user_saved %}
-                  <i class="fa-solid fa-bookmark saved"></i>
-                {% else %}
+                </button>
+                <span class="ms-2 like-count">{{ post.like_count }}</span>
+              </form>
+            {% endif %}
+          </div>
+
+          <!-- Save -->
+          <div class="me-2 d-flex align-items-center">
+            {% if request.user.is_authenticated %}
+              <form action="{% url 'posts:toggle_save' post.pk %}" method="post" class="d-flex align-items-center">
+                {% csrf_token %}
+                <button type="submit" class="icon-button">
+                  {% if user_saved %}
+                    <i class="fa-solid fa-bookmark saved"></i>
+                  {% else %}
+                    <i class="fa-regular fa-bookmark not-saved"></i>
+                  {% endif %}
+                </button>
+                <span class="ms-2">{% if user_saved %}Kaydedildi{% else %}Kaydet{% endif %}</span>
+              </form>
+            {% else %}
+              <form action="{% url 'login' %}" method="get" class="d-flex align-items-center">
+                <button type="submit" class="icon-button" onclick="alert('Kaydetmek için giriş yapmalısınız.')">
                   <i class="fa-regular fa-bookmark not-saved"></i>
-                {% endif %}
-              </button>
-              <span class="ms-2">{% if user_saved %}Kaydedildi{% else %}Kaydet{% endif %}</span>
-            </form>
-          
-            <!-- Comment -->
-            <button class="icon-button ms-auto">
-              <i class="fa-regular fa-comment comment-icon"></i>
-              <span class="ms-1">{{ post.comment_count }} Yorum</span>
-            </button>
-          
+                </button>
+                <span class="ms-2">Kaydet</span>
+              </form>
+            {% endif %}
           </div>
-  
-          <!-- Yorumlar -->
-          <hr>
-          <h5>Yorumlar</h5>
-          <br>
-          <div>
-            {% for comment in post.comments.all %}
+
+          <!-- Comment -->
+          <div class="ms-auto">
+            <i class="fa-regular fa-comment comment-icon"></i>
+            <span class="ms-1">{{ post.comment_count }} Yorum</span>
+          </div>
+
+        </div>
+
+        <!-- Yorumlar -->
+        <hr>
+        <h5>Yorumlar</h5>
+        <br>
+        <div>
+          {% for comment in post.comments.all %}
             <div class="mb-3">
-                <strong>
-                  <a href="{% url 'profile' comment.user.username %}" class="text-dark text-decoration-none">
-                    {{ comment.user.username }}
-                    {% if post.user.is_verified %}
-                        <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>
-                    {% endif %}
-                  </a>
-                </strong>: {{ comment.text }}
-              </div>
-            {% empty %}
-              <p>Henüz yorum yok.</p>
-            {% endfor %}
-          </div>
-  
+              <strong>
+                <a href="{% url 'profile' comment.user.username %}" class="text-dark text-decoration-none">
+                  {{ comment.user.username }}
+                  {% if comment.user.is_verified %}
+                    <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>
+                  {% endif %}
+                </a>
+              </strong>: {{ comment.text }}
+            </div>
+          {% empty %}
+            <p>Henüz yorum yok.</p>
+          {% endfor %}
+        </div>
+
+        {% if request.user.is_authenticated %}
           <form method="post">
             {% csrf_token %}
             {{ comment_form|crispy }}
