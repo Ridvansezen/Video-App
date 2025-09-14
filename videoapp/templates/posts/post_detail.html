@@ -15,6 +15,9 @@
             <strong>
             <a class="text-dark text-decoration-none" href="{% url 'profile' post.user.username %}">
               {{ post.user.username }}
+              {% if post.user.is_verified %}
+                  <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>
+              {% endif %}
             </a>
           </strong>
       </div>
@@ -86,6 +89,9 @@
                 <strong>
                   <a href="{% url 'profile' comment.user.username %}" class="text-dark text-decoration-none">
                     {{ comment.user.username }}
+                    {% if post.user.is_verified %}
+                        <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>
+                    {% endif %}
                   </a>
                 </strong>: {{ comment.text }}
               </div>

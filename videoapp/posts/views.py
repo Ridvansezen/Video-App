@@ -95,9 +95,18 @@ def post_detail(request, pk):
 def toggle_like(request, pk):
     post = get_object_or_404(Post, pk=pk)
     like, created = Like.objects.get_or_create(post=post, user=request.user)
-    if not created:
+
+    if created:
+        post.like_count += 1
+        post.save(update_fields=['like_count'])
+    else:
         like.delete()
+        if post.like_count > 0:
+            post.like_count -= 1
+            post.save(update_fields=['like_count'])
+
     return redirect(request.META.get('HTTP_REFERER', 'posts:explore'))
+
 
 @login_required
 @require_POST

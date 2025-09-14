@@ -10,6 +10,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    like_count = models.PositiveIntegerField(default=0)
+
     class Meta:
         ordering = ["-created_at"]
         indexes = [
@@ -18,10 +20,6 @@ class Post(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.created_at:%Y-%m-%d %H:%M}"
-
-    @property
-    def like_count(self):
-        return self.likes.count()
 
     @property
     def comment_count(self):

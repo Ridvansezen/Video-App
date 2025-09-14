@@ -32,6 +32,9 @@
                   <ul class="dropdown-menu dropdown-menu-end">
                       <li class="dropdown-header">
                           {{ request.user.username }}
+                          {% if request.user.is_verified %}
+                            <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>
+                          {% endif %}
                           {% if request.user.username == "ridvan" %}
                               <span class="text-danger ms-1">(admin)</span>
                           {% endif %}
