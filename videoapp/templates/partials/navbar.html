@@ -41,23 +41,23 @@
                       </li>
                       <li><hr class="dropdown-divider"></li>
                       <li>
-                          <a class="dropdown-item" href="{% url 'profile' request.user.username %}">Profil</a>
+                          <a class="dropdown-item" href="{% url 'users:profile' request.user.username %}">Profil</a>
                       </li>
                       <li>
-                          <a class="dropdown-item" href="{% url 'index' %}">Ayarlar</a>
+                        <a class="dropdown-item" href="{% url 'users:settings' %}">Ayarlar</a>
                       </li>
                       <li>
-                          <a class="dropdown-item" href="{% url 'logout' %}">Çıkış yap</a>
+                          <a class="dropdown-item" href="{% url 'users:logout' %}">Çıkış yap</a>
                       </li>
                   </ul>
               </li>
           {% else %}
               <!-- Kullanıcı giriş yapmamışsa -->
               <li class="nav-item">
-                  <a class="nav-link navbar-link-texts" href="{% url 'register' %}">Kayıt ol</a>
+                  <a class="nav-link navbar-link-texts" href="{% url 'users:register' %}">Kayıt ol</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link navbar-link-texts" href="{% url 'login' %}">Giriş yap</a>
+                  <a class="nav-link navbar-link-texts" href="{% url 'users:login' %}">Giriş yap</a>
               </li>
           {% endif %}
         </ul>

@@ -41,3 +41,12 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = UserModel
         fields = ["name", "bio", "profile_picture", "birth_date"]
+        
+        
+class ChangeUsernameForm(forms.ModelForm):
+    class Meta:
+        model = UserModel
+        fields = ["username"]
+        widgets = {
+            "username": forms.TextInput(attrs={"class": "form-control"})
+        }

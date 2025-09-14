@@ -13,7 +13,7 @@
           <img src="{{ MEDIA_URL }}default.jpg" alt="Profil" class="rounded-circle me-2" width="40" height="40">
         {% endif %}
         <strong>
-          <a class="text-dark text-decoration-none" href="{% url 'profile' post.user.username %}">
+          <a class="text-dark text-decoration-none" href="{% url 'users:profile' post.user.username %}">
             {{ post.user.username }}
             {% if post.user.is_verified %}
               <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>
@@ -59,7 +59,7 @@
                 <span class="ms-2 like-count">{{ post.like_count }}</span>
               </form>
             {% else %}
-              <form action="{% url 'login' %}" method="get" class="d-flex align-items-center">
+              <form action="{% url 'users:login' %}" method="get" class="d-flex align-items-center">
                 <button type="submit" class="icon-button" onclick="alert('Beğenmek için giriş yapmalısınız.')">
                   <i class="fa-regular fa-heart not-liked"></i>
                 </button>
@@ -83,7 +83,7 @@
                 <span class="ms-2">{% if user_saved %}Kaydedildi{% else %}Kaydet{% endif %}</span>
               </form>
             {% else %}
-              <form action="{% url 'login' %}" method="get" class="d-flex align-items-center">
+              <form action="{% url 'users:login' %}" method="get" class="d-flex align-items-center">
                 <button type="submit" class="icon-button" onclick="alert('Kaydetmek için giriş yapmalısınız.')">
                   <i class="fa-regular fa-bookmark not-saved"></i>
                 </button>
@@ -108,7 +108,7 @@
           {% for comment in post.comments.all %}
             <div class="mb-3">
               <strong>
-                <a href="{% url 'profile' comment.user.username %}" class="text-dark text-decoration-none">
+                <a href="{% url 'users:profile' comment.user.username %}" class="text-dark text-decoration-none">
                   {{ comment.user.username }}
                   {% if comment.user.is_verified %}
                     <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>

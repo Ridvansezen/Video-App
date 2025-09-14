@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     "fontawesomefree",
 ]
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/user/settings/'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from users.forms import CustomUserCreationForm, CustomLoginForm, UserUpdateForm
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from users.forms import CustomUserCreationForm, CustomLoginForm, UserUpdateForm, ChangeUsernameForm
 from django import forms
 from django.utils.html import format_html
 from django.contrib.auth.decorators import login_required
 from users.models import UserModel
 from django.conf import settings
 from posts.models import Post
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 # Basit login formu
 class LoginForm(forms.Form):
@@ -62,7 +64,7 @@ def logout_view(request):
         messages.success(request, "Başarıyla çıkış yaptınız.")
     else:
         messages.error(request, "Zaten giriş yapmamışsınız.")
-    return redirect("login")
+    return redirect("users:login")
 
 
 
@@ -94,4 +96,31 @@ def profile_view(request, username):
         "form": form,
         "MEDIA_URL": settings.MEDIA_URL,
         "posts": posts,  # burayı ekledik
+    })
+    
+    
+@login_required
+def settings_view(request):
+    if request.method == "POST":
+        username_form = ChangeUsernameForm(request.POST, instance=request.user, prefix="username")
+        password_form = PasswordChangeForm(user=request.user, data=request.POST, prefix="password")
+
+        if "username-submit" in request.POST and username_form.is_valid():
+            username_form.save()
+            messages.success(request, "Kullanıcı adınız başarıyla değiştirildi.")
+            return redirect("users:settings")
+
+        if "password-submit" in request.POST and password_form.is_valid():
+            password_form.save()
+            update_session_auth_hash(request, password_form.user)  # login açık kalır
+            messages.success(request, "Parolanız başarıyla değiştirildi.")
+            return redirect("users:settings")
+
+    else:
+        username_form = ChangeUsernameForm(instance=request.user, prefix="username")
+        password_form = PasswordChangeForm(user=request.user, prefix="password")
+
+    return render(request, "user/settings.html", {
+        "username_form": username_form,
+        "password_form": password_form,
     })

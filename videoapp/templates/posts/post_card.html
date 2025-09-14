@@ -8,7 +8,7 @@
       {% else %}
         <img src="{{ MEDIA_URL }}default.jpg" alt="Profil" class="rounded-circle me-2" width="30" height="30">
       {% endif %}
-      <a class="post-card-username-text" href="{% url 'profile' post.user.username %}">
+      <a class="post-card-username-text" href="{% url 'users:profile' post.user.username %}">
           {{ post.user.username }}
           {% if post.user.is_verified %}
             <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>

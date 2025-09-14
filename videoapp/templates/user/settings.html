@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+  <h3>Ayarlar</h3>
+  <hr>
+
+  <!-- Username değiştir -->
+  <h5>Kullanıcı Adını Değiştir</h5>
+  <form method="post">
+    {% csrf_token %}
+    {{ username_form|crispy }}
+    <button name="username-submit" class="btn btn-primary mt-2">Kaydet</button>
+  </form>
+
+  <hr>
+
+  <!-- Parola değiştir -->
+  <h5>Parola Değiştir</h5>
+  <form method="post">
+    {% csrf_token %}
+    {{ password_form|crispy }}
+    <button name="password-submit" class="btn btn-primary mt-2">Kaydet</button>
+  </form>
+</div>
+{% endblock %}
