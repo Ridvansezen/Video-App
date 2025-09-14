@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    <h3>Keşfet</h3>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <h3 class="header-text">Keşfet</h3>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 justify-content-center explore-grid">
+
       {% for post in posts %}
         <div class="col">
-          {% include "posts/post_card.html" with post=post %}
+          {% include "posts/post_card.html" %}
         </div>
       {% empty %}
         <p>Henüz paylaşım yok.</p>

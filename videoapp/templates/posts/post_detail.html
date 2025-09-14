@@ -41,21 +41,39 @@
         {% if request.user.is_authenticated %}
           <!-- Like / Save / Comment alanı -->
           <div class="d-flex align-items-center mt-2">
-            <form action="{% url 'posts:toggle_like' post.pk %}" method="post" class="me-2">
+
+            <!-- Like -->
+            <form action="{% url 'posts:toggle_like' post.pk %}" method="post" class="me-2 d-flex align-items-center">
               {% csrf_token %}
-              <button class="btn btn-outline-danger btn-sm">
-                {% if user_liked %}❤️{% else %}🤍{% endif %} {{ post.like_count }}
+              <button type="submit" class="icon-button">
+                {% if user_liked %}
+                  <i class="fa-solid fa-heart liked"></i>
+                {% else %}
+                  <i class="fa-regular fa-heart not-liked"></i>
+                {% endif %}
               </button>
+              <span class="ms-2 like-count">{{ post.like_count }}</span>
             </form>
-  
-            <form action="{% url 'posts:toggle_save' post.pk %}" method="post" class="me-2">
+          
+            <!-- Save -->
+            <form action="{% url 'posts:toggle_save' post.pk %}" method="post" class="me-2 d-flex align-items-center">
               {% csrf_token %}
-              <button class="btn btn-outline-primary btn-sm">
-                {% if user_saved %}🔖 Kaydedildi{% else %}📑 Kaydet{% endif %}
+              <button type="submit" class="icon-button">
+                {% if user_saved %}
+                  <i class="fa-solid fa-bookmark saved"></i>
+                {% else %}
+                  <i class="fa-regular fa-bookmark not-saved"></i>
+                {% endif %}
               </button>
+              <span class="ms-2">{% if user_saved %}Kaydedildi{% else %}Kaydet{% endif %}</span>
             </form>
-  
-            <span class="ms-auto">{{ post.comment_count }} Yorum</span>
+          
+            <!-- Comment -->
+            <button class="icon-button ms-auto">
+              <i class="fa-regular fa-comment comment-icon"></i>
+              <span class="ms-1">{{ post.comment_count }} Yorum</span>
+            </button>
+          
           </div>
   
           <!-- Yorumlar -->
@@ -82,11 +100,8 @@
             <button class="btn btn-primary btn-sm mt-2">Yorum Yap</button>
           </form>
         {% endif %}
-  
+
       </div>
     </div>
   </div>
-  
-  
-  
 {% endblock %}
