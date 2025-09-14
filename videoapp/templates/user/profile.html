@@ -14,7 +14,12 @@
       {% endif %}
     </div>
 
-    <h2 class="fs-2 profile-username d-inline">{{ user_obj.username }}</h2>
+    <h2 class="fs-2 profile-username d-inline">
+      {{ user_obj.username }}
+      {% if user_obj.is_verified %}
+        <i class="fa-solid fa-circle-check text-primary verified-icon-profile" title="Doğrulandı"></i>
+      {% endif %}
+    </h2>
     {% if user_obj.username == "ridvan" %}
         <span class="badge bg-danger fs-6 align-middle ms-2">Admin</span>
     {% endif %}

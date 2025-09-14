@@ -10,6 +10,9 @@
       {% endif %}
       <a class="post-card-username-text" href="{% url 'profile' post.user.username %}">
           {{ post.user.username }}
+          {% if post.user.is_verified %}
+            <i class="fa-solid fa-circle-check text-primary ms-1" title="Doğrulandı" aria-hidden="true"></i>
+          {% endif %}
       </a>
   </div>
 
@@ -18,7 +21,7 @@
     <a href="{% url 'posts:post_detail' post.pk %}">
       <img src="{{ post.image.url }}" alt="Fotoğraf">
     </a>
-    {% elif post.video %}
+  {% elif post.video %}
     <a href="{% url 'posts:post_detail' post.pk %}" class="video-post">
       <video muted>
         <source src="{{ post.video.url }}" type="video/mp4">

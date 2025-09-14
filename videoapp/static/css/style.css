@@ -91,6 +91,9 @@
     display: flex;
     justify-content: center; /* yatay */
     align-items: center; 
+    font-size: 0.8em;          /* daha küçük ikon */
+    margin-left: 6px;          /* boşluğu azalttık */        /* mavi ton (Instagram/Twitter gibi) */
+    vertical-align: middle; 
 }
 
 .media-container {
@@ -288,4 +291,12 @@ form span {
     color: #212529;
     margin-left: 6px;
     line-height: 1;
+}
+
+.verified-icon-profile {
+    font-size: 0.7em;          
+    vertical-align: middle;   
+    width: auto;               
+    display: inline;         
+    line-height: 1;     
 }

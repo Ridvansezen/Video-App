@@ -34,6 +34,8 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     profile_picture = models.ImageField(upload_to="profile_pics/", blank=True, null=True, default="default.jpg" ,verbose_name="Profil resmi")
     joined_at = models.DateTimeField(auto_now_add=True)
     birth_date = models.DateField(blank=True, null=True) 
+    
+    is_verified = models.BooleanField(default=False, verbose_name="Mavi Tik")
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

@@ -11,6 +11,7 @@ class CustomUserAdmin(UserAdmin):
         "name",
         "birth_date",
         "joined_at",
+        "is_verified",   # eklendi
         "is_active",
         "is_staff",
         "is_superuser",
@@ -25,9 +26,9 @@ class CustomUserAdmin(UserAdmin):
             "fields": ("name", "email", "bio", "profile_picture", "birth_date", "joined_at", "last_login"),
         }),
         ("Yetkiler", {
-            "fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions"),
+            "fields": ("is_active", "is_staff", "is_superuser", "is_verified", "groups", "user_permissions"),
         }),
-        ("Önemli Tarihler", {"fields": ()}),  # joined_at ve last_login yukarıda
+        ("Önemli Tarihler", {"fields": ()}),
     )
 
     add_fieldsets = (
@@ -42,6 +43,7 @@ class CustomUserAdmin(UserAdmin):
                 "bio",
                 "profile_picture",
                 "birth_date",
+                "is_verified",  # eklendi
                 "is_active",
                 "is_staff",
                 "is_superuser",
